@@ -1,2 +1,2 @@
 # anupongaware.github.io
-Test website for praticing
+Test website for practicing
