@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    /> -->
+    <title>Flex-01</title>
+    <style>
+      /* body div {
+        min-height: 10px;
+      } */
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .menu {
+        background-color: aqua;
+        height: 40px;
+        /* overflow: hidden; */
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .menu ul {
+        list-style: none;
+        margin: 0;
+      }
+
+      .menu ul li {
+        float: left;
+      }
+
+      .menu ul li a {
+        display: block;
+        padding: 12px;
+        color: rgb(80, 102, 19);
+        text-decoration: none;
+      }
+
+      .menu ul li a:hover {
+        background-color: blue;
+        color: white;
+      }
+
+      .menu ul li.menu-right {
+        float: right;
+        margin-right: 30px;
+      }
+
+      .menu .col-menu {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        opacity: 0.98;
+        display: none;
+      }
+
+      /* End Menu */
+
+      /* Start Header */
+
+      .header {
+        background-color: brown;
+        border: 0.1px solid brown; /*fix css margin collape*/
+      }
+
+      /* End Header */
+      .content_mother {
+        background-color: darkmagenta;
+        display: flex;
+      }
+
+      .content {
+        font-size: 40px;
+        text-align: center;
+        color: black;
+        margin: 15px;
+      }
+      .content1 {
+        flex: 1;
+        background-color: wheat;
+        height: 600px;
+      }
+      .content2 {
+        flex: 1;
+        background-color: rgb(240, 100, 233);
+        height: 600px;
+      }
+      .content3 {
+        flex: 1;
+        background-color: rgb(69, 230, 130);
+        height: 600px;
+      }
+
+      .lower_content {
+        background-color: darkgoldenrod;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .lower_content .item {
+        margin: 10px;
+        background-color: tomato;
+        padding: 20px;
+        text-align: center;
+        color: white;
+        width: 100px;
+        height: 100px;
+      }
+      .lower_content2 {
+        display: flex;
+        background-color: rgb(187, 185, 54);
+        height: 300px;
+      }
+
+      .lower_content2 .item2 {
+        flex: 1;
+        background-color: palevioletred;
+        text-align: center;
+        width: 150px;
+        height: 150px;
+        padding-top: 50px;
+        margin: 16px;
+      }
+
+      .maps {
+        background-color: blueviolet;
+        height: 600px;
+      }
+      .footer {
+        background-color: chartreuse;
+        height: 400px;
+      }
+
+      .icon-bar {
+        font-size: 24px;
+        display: none;
+      }
+
+      .icon-bar:hover {
+        color: blue;
+      }
+      .icon-bar::before {
+        content: "\2630";
+      }
+
+      /* Resoponsesive */
+      @media screen and (max-width: 500px) {
+        .content_mother {
+          flex-direction: column;
+        }
+
+        .icon-bar {
+          display: initial;
+          margin-left: 30px;
+        }
+
+        .row-menu {
+          display: none;
+        }
+
+        .col-menu {
+          position: absolute;
+          width: 100%;
+          /* display: flex; */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <ul class="row-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Single Home</a></li>
+        <li><a href="#">Comdo</a></li>
+        <li><a href="#">Customer</a></li>
+        <li class="menu-right"><a href="#">Login</a></li>
+      </ul>
+      <a href="#" onclick="openMenu()"><p class="icon-bar"></p></a>
+      <ul class="col-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Single Home</a></li>
+        <li><a href="#">Comdo</a></li>
+        <li><a href="#">Customer</a></li>
+        <li class="menu-right"><a href="#">Login</a></li>
+      </ul>
+    </div>
+    <div class="header"><h1>EPT Real Estate</h1></div>
+    <div class="content_mother">
+      <div class="content content1">1</div>
+      <div class="content content2">2</div>
+      <div class="content content3">3</div>
+    </div>
+
+    <div class="lower_content">
+      <div class="item">item 1</div>
+      <div class="item">item 2</div>
+      <div class="item">item 3</div>
+      <div class="item">item 4</div>
+      <div class="item">item 5</div>
+      <div class="item">item 6</div>
+      <div class="item">item 7</div>
+      <div class="item">item 8</div>
+      <div class="item">item 9</div>
+      <div class="item">item 10</div>
+      <div class="item">item 11</div>
+      <div class="item">item 12</div>
+    </div>
+    <div class="lower_content2">
+      <div class="item2">item 1</div>
+      <div class="item2">item 2</div>
+    </div>
+    <div class="maps"></div>
+    <div class="footer"></div>
+    <script>
+      function openMenu() {
+        let menu = document.querySelector(".col-menu");
+        if (menu.style.display === "flex") {
+          menu.style.display = "none";
+        } else {
+          menu.style.display = "flex";
+        }
+        console.log(menu);
+      }
+
+      function openResizeMenu() {
+        let menu = document.querySelector(".col-menu");
+        menu.style.display = "none";
+      }
+
+      window.onresize = openResizeMenu;
+    </script>
+  </body>
+</html>
