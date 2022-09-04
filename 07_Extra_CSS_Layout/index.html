@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      header {
+        background-color: #999999;
+        height: 60px;
+        position: sticky;
+        top: 0px;
+        left: 0px;
+        position: relative;
+      }
+
+      .hamberger-menu {
+        top: 50%;
+        transform: translate(0, -50%);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        width: 10%;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .hamberger-menu::after {
+        content: "\2630";
+        font-size: 24px;
+        font-weight: 900;
+        color: white;
+      }
+
+      .logo {
+        position: relative;
+        top: 50%;
+        left: 40%;
+        display: inline-block;
+        font-size: 20pt;
+        transform: translate(0, -50%);
+        color: white;
+      }
+
+      nav {
+        display: block;
+        background-color: #555555;
+        width: 30%;
+        float: left;
+        max-width: 200px;
+        height: 500px;
+        left: 0px;
+        transition: display 2s;
+      }
+
+      nav ul {
+        font-size: 22px;
+        margin-left: 0px;
+        padding-left: 20px;
+        list-style-type: none;
+        line-height: 2em;
+        padding: 0px;
+        text-align: center;
+      }
+
+      nav ul li {
+        color: darkblue;
+        font-weight: 900;
+        cursor: pointer;
+        margin: 20px 0;
+      }
+
+      nav ul li:hover {
+        overflow: hidden;
+        color: white;
+        background-color: rgb(153, 40, 106);
+      }
+
+      nav ul li a {
+        color: #ff9999;
+        width: 100%;
+        padding: 20px;
+      }
+
+      nav ul li a:hover {
+        color: white;
+        background-color: rgb(153, 40, 106);
+      }
+
+      article {
+        width: 67%;
+        /* background-color: #face55; */
+        float: left;
+        padding: 10px 20px;
+      }
+
+      section {
+        min-height: 500px;
+        height: auto;
+      }
+
+      section::after {
+        display: block;
+        content: " ";
+        clear: both;
+      }
+
+      footer {
+        background-color: #9999ac;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="hamberger-menu" onclick="onClickHamberger()"></div>
+      <div class="logo">Expert-Programing-Tutor.com</div>
+    </header>
+    <section>
+      <nav id="main-menu">
+        <ul>
+          <li><a href="#">menu1</a></li>
+          <li><a href="#">menu3</a></li>
+          <li><a href="#">menu2</a></li>
+        </ul>
+      </nav>
+      <article>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          voluptatibus iste vel ullam sint expedita sed dolore amet. Delectus
+          fuga vitae veritatis? Maiores consectetur nemo atque assumenda! Cumque
+          dolore omnis sapiente exercitationem, provident non accusamus
+          voluptate ullam molestias laudantium culpa quod blanditiis eius.
+          Veniam earum est, recusandae distinctio eligendi eius doloribus
+          dolorum ducimus temporibus ullam odio minima dignissimos aut fugit
+          saepe illum unde eaque sequi quo dolor provident! Ipsam minima ratione
+          possimus error a. Expedita voluptatum illo aliquam perferendis iusto
+          repellat nisi, laudantium eveniet dolorum inventore, eius molestias
+          voluptatibus quaerat id praesentium a? A dignissimos reprehenderit
+          molestias id cum voluptatibus? Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Laborum voluptatibus iste vel ullam sint expedita
+          sed dolore amet. Delectus fuga vitae veritatis? Maiores consectetur
+          nemo atque assumenda! Cumque dolore omnis sapiente exercitationem,
+          provident non accusamus voluptate ullam molestias laudantium culpa
+          quod blanditiis eius. Veniam earum est, recusandae distinctio eligendi
+          eius doloribus dolorum ducimus temporibus ullam odio minima
+          dignissimos aut fugit saepe illum unde eaque sequi quo dolor
+          provident! Ipsam minima ratione possimus error a. Expedita voluptatum
+          illo aliquam perferendis iusto repellat nisi, laudantium eveniet
+          dolorum inventore, eius molestias voluptatibus quaerat id praesentium
+          a? A dignissimos reprehenderit molestias id cum voluptatibus? Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          voluptatibus iste vel ullam sint expedita sed dolore amet. Delectus
+          fuga vitae veritatis? Maiores consectetur nemo atque assumenda! Cumque
+          dolore omnis sapiente exercitationem, provident non accusamus earum
+          est, recusandae distinctio eligendi eius doloribus dolorum ducimus
+          temporibus ullam odio minima dignissimos aut fugit saepe illum unde
+          eaque sequi quo dolor provident! Ipsam minima ratione possimus error
+          a. Expedita voluptatum illo aliquam perferendis iusto repellat nisi,
+          laudantium eveniet dolorum inventore, eius molestias voluptatibus
+          quaerat id praesentium a? A dignissimos reprehenderit molestias id cum
+          voluptatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Laborum voluptatibus iste vel ullam sint expedita sed dolore amet.
+          Delectus fuga vitae veritatis? Maiores consectetur nemo atque
+          assumenda! Cumque dolore omnis sapiente exercitationem, provident non
+          accusamus earum est, Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Laborum voluptatibus iste vel ullam sint expedita
+          sed dolore amet. Delectus fuga vitae veritatis? Maiores consectetur
+          nemo atque assumenda! Cumque dolore omnis sapiente exercitationem,
+          provident non accusamus voluptate ullam molestias laudantium culpa
+          quod blanditiis eius. Veniam earum est, recusandae distinctio eligendi
+          eius doloribus dolorum ducimus temporibus ullam odio minima
+          dignissimos aut fugit saepe illum unde eaque sequi quo dolor
+          provident! Ipsam minima ratione possimus error a. Expedita voluptatum
+          illo aliquam perferendis iusto repellat nisi, laudantium eveniet
+          dolorum inventore, eius molestias voluptatibus quaerat id praesentium
+          a? A dignissimos reprehenderit molestias id cum voluptatibus? Lorem
+          ipsum dolor sit amet consectetur adipisicing elit. Laborum
+          voluptatibus iste vel ullam sint expedita sed dolore amet. Delectus
+          fuga vitae veritatis? Maiores consectetur nemo atque assumenda! Cumque
+          dolore omnis sapiente exercitationem, provident non accusamus
+          voluptate ullam molestias laudantium culpa quod blanditiis eius.
+          Veniam earum est, recusandae distinctio eligendi eius doloribus
+          dolorum ducimus temporibus ullam odio minima dignissimos aut fugit
+          saepe illum unde eaque sequi quo dolor provident! Ipsam minima ratione
+          possimus error a. Expedita voluptatum illo aliquam perferendis iusto
+          repellat nisi, laudantium eveniet dolorum inventore, Lorem ipsum dolor
+          sit amet consectetur adipisicing elit. Laborum voluptatibus iste vel
+          ullam sint expedita sed dolore amet. Delectus fuga vitae veritatis?
+          Maiores consectetur nemo atque assumenda! Cumque dolore omnis sapiente
+          exercitationem, provident non accusamus voluptate ullam molestias
+          laudantium culpa quod blanditiis eius. Veniam earum est, recusandae
+          distinctio eligendi eius doloribus dolorum ducimus temporibus ullam
+          odio minima dignissimos aut fugit saepe illum unde eaque sequi quo
+          dolor provident! Ipsam minima ratione possimus error a. Expedita
+          voluptatum illo aliquam perferendis iusto repellat nisi, laudantium
+          eveniet dolorum inventore, eius molestias voluptatibus quaerat id
+          praesentium a? A dignissimos reprehenderit molestias id cum
+          voluptatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Laborum voluptatibus iste vel ullam sint expedita sed dolore amet.
+          Delectus fuga vitae veritatis? Maiores consectetur nemo atque
+          assumenda! Cumque dolore omnis sapiente exercitationem, provident non
+          accusamus voluptate ullam molestias laudantium culpa quod blanditiis
+          eius. Veniam earum est, recusandae distinctio eligendi eius doloribus
+          dolorum ducimus temporibus ullam odio minima dignissimos aut fugit
+          saepe illum unde eaque sequi quo dolor provident! Ipsam minima ratione
+          possimus error a. Expedita voluptatum illo aliquam perferendis iusto
+          repellat nisi, laudantium eveniet dolorum inventore,
+        </div>
+      </article>
+    </section>
+    <footer>footer</footer>
+    <script>
+      let menu = document.getElementById("main-menu");
+
+      function onClickHamberger() {
+        if (menu.style.display == "none") {
+          showMenu();
+        } else {
+          hideMenu();
+        }
+      }
+
+      function showMenu() {
+        menu.style.display = "block";
+      }
+
+      function hideMenu() {
+        menu.style.display = "none";
+      }
+    </script>
+  </body>
+</html>
