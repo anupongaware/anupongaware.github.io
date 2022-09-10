@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini calculator</title>
+    <style>
+      body {
+        font-size: 20px;
+        line-height: 40px;
+      }
+
+      button {
+        font-size: 24px;
+      }
+
+      #result {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      a
+
+      <input type="text" id="a" />
+    </div>
+    <div>
+      b
+
+      <input type="text" id="b" />
+    </div>
+    <div>
+      <button onclick="add()">+</button>
+      <button onclick="minus()">-</button>
+      <button onclick="mul()">*</button>
+      <button onclick="div()">/</button>
+    </div>
+    <div id="result"></div>
+    <script>
+      let a = document.getElementById("a");
+      let b = document.getElementById("b");
+      let result = document.getElementById("result");
+
+      function add() {
+        let value_a = parseInt(a.value);
+        let value_b = parseInt(b.value);
+        let c = value_a + value_b;
+        result.innerHTML = c;
+      }
+      function minus() {
+        let value_a = parseInt(a.value);
+        let value_b = parseInt(b.value);
+        let c = value_a - value_b;
+        result.innerHTML = c;
+      }
+      function mul() {
+        let value_a = parseInt(a.value);
+        let value_b = parseInt(b.value);
+        let c = value_a * value_b;
+        result.innerHTML = c;
+      }
+      function div() {
+        let value_a = parseInt(a.value);
+        let value_b = parseInt(b.value);
+        let c = value_a / value_b;
+        result.innerHTML = c;
+      }
+    </script>
+  </body>
+</html>

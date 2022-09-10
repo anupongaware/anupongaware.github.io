@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./static/style.css" />
+    <title>Dom Tree - Additional Topics</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <div class="upper">
+        <div id="menu" class="left" status="open">
+          <div class="open-menu" id="openMenuSticky">
+            <p style="text-align: center">
+              <a class="menu_hamberger" href="#" onclick="toggle_menu()"
+                ><i class="fas fa-bars"></i
+              ></a>
+            </p>
+          </div>
+          <p style="text-align: center">
+            <a class="menu_hamberger" href="#" onclick="toggle_menu()"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </p>
+          <button onclick="onClickSpan()">SPAN</button>
+          <button onclick="onClickTable()">Table</button>
+        </div>
+        <div class="right" id="right_pane">
+          <iframe
+            id="main_iframe"
+            src=""
+            width="100%"
+            height="100%"
+            style="border: 1px solid black"
+          ></iframe>
+        </div>
+      </div>
+      <div class="footer">
+        <div>
+          Expert-Programming-Tutor.com
+          เรียนเขียนโปรแกรมคอมพิวเตอร์วันนี้เพื่อโลกยุคอนาคต
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggle_menu() {
+        let Mymenu = document.getElementById("menu");
+        let menustatus = Mymenu.getAttribute("status");
+        let openMenuSticky = document.getElementById("openMenuSticky");
+        let rightPane = document.getElementById("right_pane");
+
+        if (menustatus === "open") {
+          Mymenu.classList.remove("menu_open");
+          Mymenu.classList.add("menu_close");
+          Mymenu.setAttribute("status", "close");
+          openMenuSticky.style.display = "block";
+          rightPane.style.left = "0px";
+          rightPane.style.right = "0px";
+        } else {
+          Mymenu.classList.add("menu_open");
+          Mymenu.classList.remove("menu_close");
+          Mymenu.setAttribute("status", "open");
+          openMenuSticky.style.display = "none";
+        }
+      }
+
+      function onClickSpan() {
+        let Myiframe = document.getElementById("main_iframe");
+        Myiframe.setAttribute("src", "span.html");
+      }
+
+      function onClickTable() {
+        let Myiframe = document.getElementById("main_iframe");
+        Myiframe.setAttribute("src", "table.html");
+      }
+    </script>
+  </body>
+</html>

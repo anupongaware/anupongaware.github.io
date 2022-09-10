@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game</title>
+    <style>
+      #main_div {
+        width: 720px;
+        height: 720px;
+        background-color: bisque;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .container {
+        margin: 2px;
+        width: 100px;
+        height: 100px;
+        background: gray;
+        padding: 5px;
+        display: inline-block;
+        position: relative;
+      }
+
+      .box1 {
+        background-color: orangered;
+        width: 100px;
+        height: 100px;
+
+        display: inline-block;
+        position: absolute;
+      }
+
+      .box2 {
+        background-color: blue;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        position: absolute;
+        transition: ease-in 0.5s;
+      }
+
+      .clickCount {
+        font-size: 25px;
+        text-align: center;
+        background-color: orangered;
+        color: white;
+      }
+    </style>
+  </head>
+  <body onload="onload()">
+    <div class="clickCount" id="clickCount">
+      please Search same cat in below
+    </div>
+    <div id="main_div"></div>
+    <script>
+      let images = [];
+
+      class GameState {
+        constructor() {
+          this.nowopen = new Array();
+          this.open_count = 0;
+          this.clickCount = 0;
+        }
+        open_new(id) {
+          this.nowopen.push(id);
+          this.open_count++;
+          this.clickCount++;
+          clickCount(this.clickCount);
+          if (this.nowopen.length >= 3) {
+            while (this.nowopen.length > 1) {
+              action("close", this.nowopen[0], false);
+            }
+          }
+
+          for (let i = 0; i < this.nowopen.length - 1; i++) {
+            for (let j = i + 1; j < this.nowopen.length; j++) {
+              if (images[this.nowopen[i]] == images[this.nowopen[j]]) {
+                action("finish", this.nowopen[i], false);
+                action("finish", this.nowopen[j], false);
+
+                this.nowopen.splice(j, 1);
+                this.nowopen.splice(i, 1);
+                this.open_count--;
+                this.open_count--;
+              }
+            }
+          }
+        }
+
+        close_one(id) {
+          let index = this.nowopen.indexOf(id);
+          if (index != -1) {
+            this.nowopen.splice(index, 1);
+          }
+          this.open_count--;
+          clickCount(this.clickCount);
+        }
+      }
+
+      let gameState = new GameState();
+
+      function shuffle(array) {
+        for (let i = 0; i < array.length; i++) {
+          let r = Math.floor(Math.random() * (array.length - i));
+          let temp = array[i];
+          array[i] = array[r];
+          array[r] = temp;
+        }
+        return array;
+      }
+
+      function clickCount(count) {
+        let count_text = document.getElementById("clickCount");
+        count_text.innerHTML = "" + count;
+      }
+
+      function action(what, who, isPlaySound = true) {
+        let blue = document.getElementById(who + "_blue");
+        let audio = new Audio("./audio/click.mp3");
+
+        if (what == "open") {
+          blue.style.height = "0px";
+          gameState.open_new(who);
+          if (isPlaySound) {
+            audio.play();
+          }
+        } else if (what == "close") {
+          blue.style.height = "100px";
+          gameState.close_one(who);
+          if (isPlaySound) {
+            audio.play();
+          }
+        } else if (what == "finish") {
+          blue.style.height = "0px";
+          blue.style.visibility = "hidden";
+          blue.setAttribute("finish", "true");
+        }
+      }
+
+      function square(id, image) {
+        let square = `<div class="container">
+                <div id="${id}_orange" class="box1" onclick="action('close', ${id})">
+                  <img src=${image} style="width:100px; height:100px" />
+                </div>
+                <div id="${id}_blue" class="box2" onclick="action('open',  ${id})"></div>
+                  <img src=${image} style="width:100px; height:100px" />
+                </div>`;
+        return square;
+      }
+
+      function onload() {
+        for (let i = 1; i <= 18; i++) {
+          images.push("./cats/" + i + ".jpg");
+          images.push("./cats/" + i + ".jpg");
+        }
+
+        for (let i = 0; i < images.length; i++) {
+          shuffle(images);
+        }
+
+        let main = document.getElementById("main_div");
+
+        for (let i = 0; i <= 35; i++) {
+          main.innerHTML += square(i, images[i]);
+        }
+      }
+    </script>
+  </body>
+</html>
