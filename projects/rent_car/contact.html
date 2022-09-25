@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- nav -->
+    <nav class="menu">
+      <ul>
+        <li>
+          <a href="index.html"><h1 class="logo">Beep Beep</h1></a>
+        </li>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="about-us.html">ABOUT US</a></li>
+        <li><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </nav>
+    <!-- content -->
+    <div class="content-contact">
+      <div class="row-contact">
+        <div class="inner-left">
+          <div class="left-overlay"></div>
+        </div>
+        <div class="inner-right">
+          <h1>Contact Us</h1>
+          <p>
+            If you’re wondering about an order, our products, or our website,
+            shoot them an email at support@gbeepbeep.com or check out the Help &
+            FAQs section—the answer might be there already! You can also contact
+            us via LiveChat.
+          </p>
+          <p>
+            You'll find us in the bottom right hand corner of the screen when
+            we're available to chat!
+          </p>
+        </div>
+      </div>
+      <div class="row-contact">
+        <div class="form">
+          <h1>Get in touch with us</h1>
+          <form action="contact.php" method="get">
+            <label for="input-name">Name :</label>
+            <input type="text" name="input-name" id="input-name" />
+            <label for="input-email">Email :</label>
+            <input type="text" name="input-email" id="input-email" />
+            <label for="input-phone">Phone Number:</label>
+            <input type="text" name="input-phone" id="input-phone" />
+            <label for="input-message">Message:</label>
+            <br />
+            <textarea name="input-message" id="input-message"></textarea>
+            <input type="submit" value="Submit" name="submit-contact" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- footer -->
+    <footer>
+      <p>All right reserved @ 2025 Beep-Beep-Rental.com</p>
+      <p><i class="fa-solid fa-phone"></i>Tel: 088 888888888</p>
+      <p><i class="fa-solid fa-envelope"></i>admin@beepbeep.com</p>
+      <div class="iconCC">
+        <p><i class="fa-brands fa-cc-visa"></i></p>
+        <p><i class="fa-brands fa-cc-mastercard"></i></p>
+        <p><i class="fa-brands fa-cc-paypal"></i></p>
+        <p><i class="fa-brands fa-cc-apple-pay"></i></p>
+        <p><i class="fa-brands fa-cc-amazon-pay"></i></p>
+      </div>
+    </footer>
+  </body>
+</html>
