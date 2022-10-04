@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting</title>
+    <style>
+      .mainDisplay {
+        background-color: darkgray;
+        min-height: 100px;
+        padding: 30px;
+      }
+
+      .mainDisplay2 {
+        background-color: purple;
+        min-height: 100px;
+        padding: 30px;
+      }
+
+      .line {
+        padding: 4px;
+        background-color: darkgreen;
+        overflow: visible;
+        margin: 10px;
+        display: block;
+      }
+
+      .item {
+        margin: 5px;
+        min-width: 30px;
+        padding: 3px;
+        background-color: gold;
+        border: 2px solid black;
+        display: inline-block;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .item2 {
+        margin: 5px;
+        min-width: 30px;
+        padding: 3px;
+        background-color: darkmagenta;
+        border: 2px solid black;
+        display: inline-block;
+        position: absolute;
+        text-align: center;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mainDisplay" id="mainDisplay"></div>
+    <div class="mainDisplay2" id="mainDisplay2"></div>
+
+    <script>
+      function getOffset(el) {
+        var _x = 0;
+        var _y = 0;
+
+        while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+          _x += el.offsetLeft - el.scrollLeft;
+          _y += el.offsetTop - el.scrollTop;
+          el = el.offsetParent;
+        }
+        return { top: _y, left: _x };
+      }
+
+      const createArray = (length) => {
+        let data = [];
+        for (let i = 0; i < length; i++) {
+          data.push(i + 1);
+        }
+        return data;
+      };
+
+      const randomArray = (data) => {
+        let data_clone = data.slice();
+        for (let i = 0; i < data.length * 100; i++) {
+          let a = Math.floor(Math.random() * data.length);
+          let temp = data[a];
+          data[a] = data[0];
+          data[0] = temp;
+        }
+      };
+
+      // สร้าง function bubbleSort
+      function bubbleSort(data) {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data.length - i - 1; j++) {
+            if (data[j] > data[j + 1]) {
+              mainDisplay.addState(data, j, j + 1, -1, -1);
+
+              let temp = data[j + 1];
+              data[j + 1] = data[j];
+              data[j] = temp;
+            } else {
+              mainDisplay.addState(data, -1, -1, j, j + 1);
+            }
+          }
+        }
+      }
+
+      // สร้าง selection sort
+      function selectionSort(data) {
+        for (let i = 0; i < data.length; i++) {
+          let max = Number.NEGATIVE_INFINITY;
+          let max_index = -1;
+          for (let j = 0; j < data.length - i; j++) {
+            if (data[j] > max) {
+              mainDisplay.addState(data, -1, -1, j, max_index);
+              max = data[j];
+              max_index = j;
+            }
+          }
+          mainDisplay.addState(data, max_index, data.length - i, -1, -1);
+          let temp = data[max_index];
+          data[max_index] = data[data.length - i - 1];
+          data[data.length - i - 1] = temp;
+        }
+      }
+
+      //สร้าง Insertion sort
+      function insertionSort(data) {
+        for (let i = 0; i < data.length; i++) {
+          let now = data[i];
+          let j;
+
+          mainDisplay.addState(data, -1, -1, i, -1);
+          for (j = i - 1; j >= 0; j--) {
+            if (data[j] > now) {
+              mainDisplay.addState(data, j, j + 1, i, -1);
+              data[j + 1] = data[j];
+              data[j] = now;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+
+      // สร้าง merge sort
+      function mergeSort(data, left, right) {
+        if (left == right - 1) {
+          return;
+        }
+
+        if (left >= right) {
+          return;
+        }
+
+        let mid = Math.floor((left + right) / 2);
+        mainDisplay.addState(data, -1, mid, left, right - 1);
+        mergeSort(data, left, mid);
+        mergeSort(data, mid, right);
+
+        let l = left;
+        let r = mid;
+        let temp_data = [];
+        let index = 0;
+
+        while (l < mid && r < right) {
+          if (data[l] < data[r]) {
+            mainDisplay.addState(data, -1, -1, l, r);
+            temp_data[index] = data[l];
+            l++;
+            index++;
+
+            mainDisplay.addState(temp_data, -1, -1, index, -1);
+          } else {
+            mainDisplay.addState(data, -1, -1, r, l);
+            temp_data[index] = data[r];
+            r++;
+            index++;
+            mainDisplay.addState(temp_data, -1, -1, index, -1);
+          }
+        }
+
+        while (l < mid) {
+          mainDisplay.addState(data, -1, -1, l, -1);
+          temp_data[index] = data[l];
+          l++;
+          index++;
+          mainDisplay.addState(temp_data, -1, -1, index, -1);
+        }
+
+        while (r < right) {
+          mainDisplay.addState(data, -1, -1, r, -1);
+          temp_data[index] = data[r];
+          r++;
+          index++;
+          mainDisplay.addState(temp_data, -1, -1, index, -1);
+        }
+
+        let j = 0;
+        for (let i = left; i < right; i++) {
+          data[i] = temp_data[j];
+          j++;
+        }
+      }
+
+      let mainDiv = document.getElementById("mainDisplay");
+      let mainDiv2 = document.getElementById("mainDisplay2");
+
+      let mainDisplay = {
+        display: mainDiv,
+        display2: mainDiv2,
+        state: [],
+        highlight: [],
+        highlight2: [],
+        addState: (data, position1, position2, position3, position4) => {
+          let data_clone = data.slice();
+          mainDisplay.state.push(data_clone);
+          mainDisplay.highlight.push([position1, position2]);
+          mainDisplay.highlight2.push([position3, position4]);
+        },
+        showState: () => {
+          for (let i = 0; i < mainDisplay.state.length; i++) {
+            let line = document.createElement("div");
+            line.classList.add("line");
+
+            let item = document.createElement("div");
+            item.classList.add("item");
+            item.innerHTML = "" + i + ":";
+            item.style.minWidth = "100px";
+            line.appendChild(item);
+
+            for (let j = 0; j < mainDisplay.state[i].length; j++) {
+              let item = document.createElement("div");
+              item.classList.add("item");
+              item.innerHTML = "" + mainDisplay.state[i][j];
+
+              if (mainDisplay.highlight[i][0] == j) {
+                item.style.backgroundColor = "blue";
+              }
+              if (mainDisplay.highlight[i][1] == j) {
+                item.style.backgroundColor = "blue";
+              }
+
+              if (mainDisplay.highlight2[i][0] == j) {
+                item.style.backgroundColor = "pink";
+              }
+              if (mainDisplay.highlight2[i][1] == j) {
+                item.style.backgroundColor = "pink";
+              }
+
+              line.appendChild(item);
+            }
+            mainDisplay.display.appendChild(line);
+          }
+        },
+        showStateAnimation: () => {
+          let line = document.createElement("div");
+          line.classList.add("line");
+          mainDisplay.display2.appendChild(line);
+
+          let i = 0;
+          function stepStatus() {
+            if (i >= mainDisplay.state.length) {
+              return;
+            }
+
+            line.innerHTML = "";
+
+            let head = document.createElement("div");
+            head.classList.add("item");
+            head.innerHTML = ">" + i + ":";
+            head.style.minWidth = "70px";
+            head.style.backgroundColor = "violet";
+            line.appendChild(head);
+
+            let obj1 = null,
+              obj2 = null;
+            for (let j = 0; j < mainDisplay.state[i].length; j++) {
+              let inner = document.createElement("div");
+              inner.classList.add("item2");
+              inner.innerHTML = "" + mainDisplay.state[i][j];
+              inner.style.minWidth = "20px";
+              inner.style.left = 40 * j + 150 + "px";
+              inner.style.backgroundColor = "violet";
+              line.appendChild(inner);
+
+              if (mainDisplay.highlight[i][0] == j) {
+                obj1 = inner;
+              }
+              if (mainDisplay.highlight[i][1] == j) {
+                obj2 = inner;
+              }
+            }
+
+            if (obj1 != null && obj2 != null) {
+              let offset_obj1 = getOffset(obj1);
+              let offset_obj2 = getOffset(obj2);
+
+              let P0 = new Point(offset_obj1.left, offset_obj1.top);
+              let P1 = new Point(offset_obj1.left, offset_obj1.top - 100);
+              let P2 = new Point(offset_obj2.left, offset_obj2.top - 100);
+              let P3 = new Point(offset_obj2.left, offset_obj2.top);
+
+              let P0_2 = new Point(offset_obj2.left, offset_obj2.top);
+              let P1_2 = new Point(offset_obj2.left, offset_obj2.top + 100);
+              let P2_2 = new Point(offset_obj1.left, offset_obj1.top + 100);
+              let P3_2 = new Point(offset_obj1.left, offset_obj1.top);
+
+              let xSpringMotion = new SpringAnimation(obj1, P0, P1, P2, P3);
+              xSpringMotion.doMove(() => {});
+
+              let xSpringMotion_02 = new SpringAnimation(
+                obj2,
+                P0_2,
+                P1_2,
+                P2_2,
+                P3_2
+              );
+              xSpringMotion_02.doMove(() => {});
+            } else {
+              i++;
+              stepStatus();
+            }
+          }
+          stepStatus();
+
+          // let item2 = document.createElement("div");
+          // item2.classList.add("item2");
+          // item2.innerHTML = "3";
+          // item2.style.minWidth = "20px";
+          // item2.style.left = 40 * 0 + 150 + "px";
+          // item2.style.backgroundColor = "violet";
+          // line.appendChild(item2);
+
+          // let item3 = document.createElement("div");
+          // item3.classList.add("item2");
+          // item3.innerHTML = "5";
+          // item3.style.minWidth = "20px";
+          // item3.style.left = 40 * 1 + 150 + "px";
+          // item3.style.backgroundColor = "violet";
+          // line.appendChild(item3);
+
+          // let offset_obj1 = getOffset(item2);
+          // let offset_obj2 = getOffset(item3);
+
+          // let P0 = new Point(offset_obj1.left, offset_obj1.top);
+          // let P1 = new Point(offset_obj1.left, offset_obj1.top - 100);
+          // let P2 = new Point(offset_obj2.left, offset_obj2.top - 100);
+          // let P3 = new Point(offset_obj2.left, offset_obj2.top);
+
+          // let P0_2 = new Point(offset_obj2.left, offset_obj2.top);
+          // let P1_2 = new Point(offset_obj2.left, offset_obj2.top + 100);
+          // let P2_2 = new Point(offset_obj1.left, offset_obj1.top + 100);
+          // let P3_2 = new Point(offset_obj1.left, offset_obj1.top);
+
+          // let xSpringMotion = new SpringAnimation(item2, P0, P1, P2, P3);
+          // xSpringMotion.doMove(() => {});
+
+          // let xSpringMotion_02 = new SpringAnimation(
+          //   item3,
+          //   P0_2,
+          //   P1_2,
+          //   P2_2,
+          //   P3_2
+          // );
+          // xSpringMotion_02.doMove(() => {});
+        },
+      };
+
+      class Point {
+        constructor(x, y) {
+          if (x == undefined) {
+            this.x = 0;
+          } else {
+            this.x = x;
+          }
+
+          if (y == undefined) {
+            this.y = 0;
+          } else {
+            this.y = y;
+          }
+        }
+
+        get PosX() {
+          return this.x;
+        }
+
+        get PosY() {
+          return this.y;
+        }
+
+        set PosX(x) {
+          this.x = x;
+        }
+
+        set PosY(y) {
+          this.y = y;
+        }
+      }
+
+      //class Animation
+      class SpringAnimation {
+        constructor(obj, P0, P1, P2, P3) {
+          this.obj = obj;
+          this.P0 = P0;
+          this.P1 = P1;
+          this.P2 = P2;
+          this.P3 = P3;
+        }
+
+        spring(t) {
+          // let theta = Math.atan2(1, 1.0 / 3.0);
+          // let R = Math.sqrt(10.0 / 9);
+          return -1 * Math.exp(-5 * t) * Math.cos(10 * t);
+        }
+
+        getPos(t) {
+          let x =
+            Math.pow(1 - t, 3) * Math.pow(t, 0) * this.P0.PosX +
+            Math.pow(1 - t, 2) * Math.pow(t, 1) * this.P1.PosX +
+            Math.pow(1 - t, 1) * Math.pow(t, 2) * this.P2.PosX +
+            Math.pow(1 - t, 0) * Math.pow(t, 3) * this.P3.PosX;
+
+          let y =
+            Math.pow(1 - t, 3) * Math.pow(t, 0) * this.P0.PosY +
+            Math.pow(1 - t, 2) * Math.pow(t, 1) * this.P1.PosY +
+            Math.pow(1 - t, 1) * Math.pow(t, 2) * this.P2.PosY +
+            Math.pow(1 - t, 0) * Math.pow(t, 3) * this.P3.PosY;
+
+          let now = new Point(x, y);
+          return now;
+        }
+
+        doMove(finish_callback) {
+          let time = 0;
+          let timer = setInterval(() => {
+            time += 0.01;
+            let tt = this.spring(time);
+            let pos = this.getPos(1 + tt);
+            this.obj.style.left = pos.PosX + "px";
+            this.obj.style.top = pos.PosY + "px";
+
+            if (time >= 1) {
+              clearInterval(timer);
+              this.obj.style.left = this.P3.PosX + "px";
+              this.obj.style.top = this.P3.PosY + "px";
+              finish_callback();
+            }
+          }, 10);
+        }
+      }
+
+      //ตอนที่  page กำลังโหลด
+      document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+          let data = createArray(10);
+          randomArray(data);
+          mainDisplay.addState(data, -1, -1, -1, -1);
+          bubbleSort(data);
+          // selectionSort(data);
+          // insertionSort(data);
+          // mergeSort(data, 0, data.length);
+          mainDisplay.addState(data, -1, -1, -1, -1);
+          // mainDisplay.showState();
+          mainDisplay.showStateAnimation();
+        },
+        false
+      );
+    </script>
+  </body>
+</html>
