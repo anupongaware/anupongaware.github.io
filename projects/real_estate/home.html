@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./static/lib/anime.min.js"></script>
+    <title>AP Real Estate</title>
+  </head>
+  <body>
+    <!-- Menu Section -->
+    <div class="menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li class="dropdown_menu">
+          <a href="#">Buy</a>
+          <div class="dropdown_content">
+            <ul>
+              <li><a href="#">House</a></li>
+              <li><a href="#">Condo</a></li>
+              <li><a href="#">Commercial</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#">Sell</a></li>
+        <li><a href="#">Search</a></li>
+      </ul>
+      <ul>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Search section -->
+    <div class="container01">
+      <div class="main">
+        <h1>Buy Sale Real Estate In Thailand</h1>
+        <h3>Convinent to discover your style Real Estate</h3>
+        <div class="serch_box">
+          <form action="">
+            <input type="text" name="keyword" id="" />
+            <select name="property_type" id="">
+              <option value="">House</option>
+              <option value="">Land</option>
+              <option value="">Commercial</option>
+            </select>
+            <input type="submit" value="search" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container02">
+      <div class="main2"></div>
+    </div>
+
+    <!-- Js Script Section -->
+    <script>
+      anime({
+        targets: ".main",
+        translateY: 250,
+        opacity: [0, 1],
+        rotate: "1turn",
+        backgroundColor: "rgb(97, 80, 28, 0.7)",
+        duration: 800,
+        delay: 1000,
+      });
+
+      //jQuery Script
+      $(document).ready(function () {
+        let menu_height = $(".menu").height();
+        let windows_height = $(window).height();
+        let image_height = windows_height - menu_height + "px";
+
+        $(".container01").height(image_height);
+
+        $(window).resize(function () {
+          $(".container01").height(image_height);
+        });
+
+        let animationForMain2 = function () {
+          if ($(".main2").attr("animation_finish") != 1) {
+            $(".main2").attr("animation_finish", 1);
+            let tl = anime
+              .timeline({
+                easing: "easeOutElastic(1, .5)",
+                duration: 800,
+              })
+              .add({
+                targets: ".main2",
+                translateY: 250,
+                opacity: [0, 1],
+                rotate: "1turn",
+                backgroundColor: "#f00",
+              });
+          }
+        };
+
+        $(window).scroll(function () {
+          let hT = $(".main2").offset().top,
+            hH = $(".main2").outerHeight(),
+            wH = $(window).height(),
+            wS = $(this).scrollTop();
+          if (wS > hT + hH - wH) {
+            animationForMain2();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

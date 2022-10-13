@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AP Real Estate</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./static/lib/anime.min.js"></script>
+    <script>
+      const itemTemplate = (
+        id,
+        real_estate_name,
+        LOCATION,
+        property_type,
+        SALE_TERMS,
+        SALE_PRICE,
+        RENT_PRICE,
+        BEDROOMS,
+        UNIT_SIZE,
+        LAND_AREA,
+        image_01
+      ) => {
+        let template = `<div class="main2">
+          <div class="image">
+            <img
+              src="${image_01}"
+              alt=""
+            />
+          </div>
+          <div class="information">
+            <p>Name : ${real_estate_name}</p>
+            <p>Location : ${LOCATION}</p>
+            <p>Property Type : ${property_type}</p>
+            <p>Sale Price : ${SALE_PRICE}</p>
+            <p>Rent Price : ${RENT_PRICE}</p>
+            <p>Amount Bedrooms : ${BEDROOMS}</p>
+            <p>Unit Size : ${UNIT_SIZE}</p>
+            <p>Land Area : ${LAND_AREA}</p>
+            <p><button id="propertyID_${id}" class="select_prop_btn" properyId="${id}">More Detail</button></p>
+          </div>
+        </div>`;
+
+        return template;
+      };
+
+      const onPropertyDetail = (id) => {
+        $.getJSON(
+          "https://expert-programming-tutor.com/Downloads/w701/property_detail.php?id=" +
+            id,
+          function (data) {
+            var items = [];
+            $.each(data, function (key, val) {
+              items.push(
+                "<tr id='table_" +
+                  key +
+                  "'>" +
+                  "<td>" +
+                  key +
+                  "</td>" +
+                  "<td>" +
+                  val +
+                  "</td>" +
+                  "</tr>"
+              );
+            });
+
+            $(".container03").html(" ");
+            $("<table/>", {
+              class: "my-info-list",
+              html: items.join("\t\n"),
+            }).appendTo($(".container03"));
+
+            console.log("lat :" + data.lat + ", " + "lon :" + data.lon);
+            let items_image = [];
+
+            items_image.push(
+              `<div>
+                <img src="${data.image_01}" alt="image property"></img>
+              </div>`
+            );
+            items_image.push(
+              `<div>
+                <img src="${data.image_02}" alt="image property"></img>
+              </div>`
+            );
+            items_image.push(
+              `<div>
+                <img src="${data.image_03}" alt="image property"></img>
+              </div>`
+            );
+            items_image.push(
+              `<div>
+                <img src="${data.image_04}" alt="image property"></img>
+              </div>`
+            );
+            items_image.push(
+              `<div>
+                <img src="${data.image_05}" alt="image property"></img>
+              </div>`
+            );
+
+            $("<div/>", {
+              class: "property_image",
+              html: items_image.join("\t\n"),
+            }).appendTo($(".container03"));
+
+            initMap(data.lat, data.lon);
+          }
+        );
+      };
+
+      const onSearch = () => {
+        $(".container02").html(" ");
+        $(".container03").html(" ");
+        let search_text = $("#search_text").val();
+        $.getJSON(
+          "https://expert-programming-tutor.com/Downloads/w701/property_search.php?locate=" +
+            search_text,
+          function (data) {
+            for (let i = 0; i < data.length; i++) {
+              let temp = itemTemplate(
+                data[i].id,
+                data[i].real_estate_name,
+                data[i].LOCATION,
+                data[i].property_type,
+                data[i].SALE_TERMS,
+                data[i].SALE_PRICE,
+                data[i].RENT_PRICE,
+                data[i].BEDROOMS,
+                data[i].UNIT_SIZE,
+                data[i].LAND_AREA,
+                data[i].image_01
+              );
+
+              $(".container02").append(temp);
+            }
+
+            $(".select_prop_btn").each(function () {
+              $(this).click(function () {
+                let prop_id = $(this).attr("properyId");
+                onPropertyDetail(prop_id);
+              });
+            });
+          }
+        );
+        return false;
+      };
+    </script>
+  </head>
+  <body>
+    <!-- Menu Section -->
+    <div class="menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li class="dropdown_menu">
+          <a href="#">Buy</a>
+          <div class="dropdown_content">
+            <ul>
+              <li><a href="#">House</a></li>
+              <li><a href="#">Condo</a></li>
+              <li><a href="#">Commercial</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#">Sell</a></li>
+        <li><a href="#">Search</a></li>
+      </ul>
+      <ul>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </div>
+
+    <!-- Search section -->
+    <div class="container01">
+      <div class="main">
+        <h1>Buy Sale Real Estate In Thailand</h1>
+        <h3>Convinent to discover your style Real Estate</h3>
+        <div class="serch_box">
+          <form action="" onsubmit="return onSearch()">
+            <input type="text" name="keyword" id="search_text" />
+            <select name="property_type" id="">
+              <option value="">House</option>
+              <option value="">Land</option>
+              <option value="">Commercial</option>
+            </select>
+            <input type="submit" value="search" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container02"></div>
+    <div class="container03"></div>
+    <div id="map"></div>
+
+    <!-- Js Script Section -->
+    <script>
+      anime({
+        targets: ".main",
+        translateY: 250,
+        opacity: [0, 1],
+        rotate: "1turn",
+        backgroundColor: "rgb(97, 80, 28, 0.7)",
+        duration: 800,
+        delay: 1000,
+      });
+
+      //jQuery Script
+      $(document).ready(function () {
+        let menu_height = $(".menu").height();
+        let windows_height = $(window).height();
+        let image_height = windows_height - menu_height + "px";
+
+        // Reset Screen Size
+        $(".container01").height(image_height);
+
+        $(window).resize(function () {
+          $(".container01").height(image_height);
+        });
+
+        // Search Animation
+        let animationForMain2 = function () {
+          if ($(".main2").attr("animation_finish") != 1) {
+            $(".main2").attr("animation_finish", 1);
+            let tl = anime
+              .timeline({
+                easing: "easeOutElastic(1, .5)",
+                duration: 800,
+              })
+              .add({
+                targets: ".main2",
+                translateY: 50,
+                opacity: [0, 1],
+                rotate: "1turn",
+                backgroundColor: "#fff",
+              });
+          }
+        };
+
+        $(window).scroll(function () {
+          let hT = $(".main2").offset().top,
+            hH = $(".main2").outerHeight(),
+            wH = $(window).height(),
+            wS = $(this).scrollTop();
+          if (wS > hT + hH - wH) {
+            animationForMain2();
+          }
+        });
+      });
+
+      //Google Map
+      // In this example, we center the map, and add a marker, using a LatLng object
+      // literal instead of a google.maps.LatLng object. LatLng object literals are
+      // a convenient way to add a LatLng coordinate and, in most cases, can be used
+      // in place of a google.maps.LatLng object.
+
+      let map;
+
+      function initMap(xlat, xlon) {
+        const mapOptions = {
+          zoom: 8,
+          center: { lat: 13.677197, lng: 100.4678 },
+        };
+
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        const marker = new google.maps.Marker({
+          // The below line is equivalent to writing:
+          // position: new google.maps.LatLng(-34.397, 150.644)
+          position: { lat: -34.397, lng: 150.644 },
+          map: map,
+        });
+        // You can use a LatLng literal in place of a google.maps.LatLng object when
+        // creating the Marker object. Once the Marker object is instantiated, its
+        // position will be available as a google.maps.LatLng object. In this case,
+        // we retrieve the marker's position using the
+        // google.maps.LatLng.getPosition() method.
+        const infowindow = new google.maps.InfoWindow({
+          content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+        });
+
+        google.maps.event.addListener(marker, "click", () => {
+          infowindow.open(map, marker);
+        });
+      }
+
+      window.initMap = initMap;
+    </script>
+    <!-- Google Map API -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"
+    ></script>
+  </body>
+</html>

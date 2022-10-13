@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      table,
+      tr,
+      td {
+        border: 1px solid black;
+      }
+    </style>
+    <title>Test Ajax</title>
+  </head>
+  <body>
+    <button onclick="loadData()">Load</button>
+    <div class="main"></div>
+
+    <script>
+      const loadData = () => {
+        $.getJSON(
+          "https://expert-programming-tutor.com/Downloads/w701/property_search.php?locat",
+          function (data) {
+            var items = [];
+            $.each(data, function (key, val) {
+              items.push(
+                "<tr id='" +
+                  key +
+                  "'>" +
+                  "<td>" +
+                  key +
+                  "</td>" +
+                  "<td>" +
+                  val +
+                  "</td>" +
+                  "</tr>"
+              );
+            });
+
+            $("<table/>", {
+              class: "my-new-list",
+              html: items.join("\t\n"),
+            }).appendTo($(".main"));
+          }
+        );
+      };
+    </script>
+  </body>
+</html>
